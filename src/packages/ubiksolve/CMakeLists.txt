@@ -26,7 +26,7 @@ set(CMAKE_Fortran_MODULE_DIRECTORY ${UbikSolve_MODULE_DIR})
 
 
 # ---------------------------------------------------------------------------- #
-# Build Options 
+# Build Options
 # ---------------------------------------------------------------------------- #
 include(CMakeDependentOption)
 
@@ -46,7 +46,7 @@ if (ENABLE_TESTS)
 endif()
 
 # ---------------------------------------------------------------------------- #
-# Compiler Flags and Definitions 
+# Compiler Flags and Definitions
 # ---------------------------------------------------------------------------- #
 
 if ( CMAKE_Fortran_FLAGS AND Fortran_COMPILER_IS_NAG )
@@ -55,31 +55,25 @@ if ( CMAKE_Fortran_FLAGS AND Fortran_COMPILER_IS_NAG )
 endif(CMAKE_Fortran_FLAGS AND Fortran_COMPILER_IS_NAG)
 
 # ---------------------------------------------------------------------------- #
-# Preprocessor definitions 
+# Preprocessor definitions
 # ---------------------------------------------------------------------------- #
-
-# Preprocessor - allow this to be a list to define global flags easily
-if ( NOT UbikSolve_PREPROCESSOR )
-  set(UbikSolve_PREPROCESSOR cpp -ansi)
-endif()
 
 # Add the compiler type to the global defines and the preprocessor
 string(TOUPPER "-D${CMAKE_Fortran_COMPILER_ID}_COMPILER" UbikSolve_Compiler_Define)
 add_definitions(${UbikSolve_Compiler_Define})
-list(APPEND UbikSolve_PREPROCESSOR ${UbikSolve_Compiler_Define})
 
 # Add any user defined preprocessor flags
 if (UbikSolve_FPP_FLAGS)
-  list(APPEND UbikSolve_PREPROCESSOR ${UbikSolve_FPP_FLAGS})
+  add_definitions (${UbikSolve_FPP_FLAGS})
 endif()
 
 # Add the PGSLIb defines
 if (ENABLE_PGSLib)
-  list(APPEND UbikSolve_PREPROCESSOR -Duse_PGSLib)
+  add_definitions (-Duse_PGSLib)
 endif()
 
 # ---------------------------------------------------------------------------- #
-# Installation Definitions 
+# Installation Definitions
 # ---------------------------------------------------------------------------- #
 
 # Need the paths defined before adding src to the build
@@ -105,7 +99,7 @@ if (NOT UbikSolve_CONFIG_INSTALL_DIR)
 endif()
 
 # ---------------------------------------------------------------------------- #
-# Source Directories 
+# Source Directories
 # ---------------------------------------------------------------------------- #
 
 add_subdirectory(src)
@@ -115,7 +109,7 @@ if (ENABLE_TESTS)
 endif()
 
 # ---------------------------------------------------------------------------- #
-# Export Definitions 
+# Export Definitions
 # ---------------------------------------------------------------------------- #
 
 # Create the target file
@@ -129,7 +123,5 @@ set(UbikSolve_CONFIG_FILE ${UbikSolve_BINARY_DIR}/ubiksolve-config.cmake)
 configure_file(${UbikSolve_SOURCE_DIR}/ubiksolve-config.in
                ${UbikSolve_CONFIG_FILE}
 	       @ONLY)
-install(FILES ${UbikSolve_CONFIG_FILE} 
+install(FILES ${UbikSolve_CONFIG_FILE}
         DESTINATION ${UbikSolve_CONFIG_INSTALL_DIR})
-
-

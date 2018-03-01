@@ -17,13 +17,13 @@ contains
     return
   end subroutine MatVec_Full
 
-  subroutine MatVec_ELL (coeff, x_vec, y, status)
+  subroutine MatVec_ELL_TEST (coeff, x_vec, y, status)
     type(Ubik_ELL_matrix), intent(in) :: coeff
 
 #include "MatVec-guts.F"
 
     return
-  end subroutine MatVec_ELL
+  end subroutine MatVec_ELL_TEST
 
   subroutine MatVec (x_vec, y, status)
     use Full_data_module
@@ -38,7 +38,7 @@ contains
     case (Ubik_Full)
        call MatVec_Full (coeff_full, x_vec, y, status)
     case (Ubik_ELL)
-       call MatVec_ELL (coeff_ell, x_vec, y, status)
+       call MatVec_ELL_TEST (coeff_ell, x_vec, y, status)
     end select
 
     return
